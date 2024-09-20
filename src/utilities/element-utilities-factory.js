@@ -4763,6 +4763,36 @@ module.exports = function () {
         data[name] = getProp(defaultProps, name);
       }
     });
+
+    if(data.language && data.language == 'SBML') {
+      data['simulation'] = elementUtilities.getSBMLSimulationDefaults(className);
+    }
+  }
+
+  // TODO: Fill
+  elementUtilities.getSBMLSimulationDefaults = function (className) {
+    var pureClass = elementUtilities.getPureSbgnClass(className);
+    if (elementUtilities.processTypes.includes(pureClass)) {  // SBML Process
+      return {
+        'localParameters': [],
+        'kineticLaw': ""
+      }
+    } else if (elementUtilities.edgeTypes.includes(pureClass)) {  // SBML Edge
+      return {
+        'stoichiometry': 1,
+        'constant': false
+      }
+    } else {    // SBML Node
+      return {
+        'initialAmount': 0.0,
+        'initialConcentration': 0.0,
+        'substanceUnits': "",
+        'hasOnlySubstanceUnits': true, // true for amount, false for density
+        'constant': false,
+        'boundaryCondition': false,
+        'conversionFactor': 1
+      };
+    }
   }
 
   elementUtilities.extendNodeDataWithClassDefaults = function (
