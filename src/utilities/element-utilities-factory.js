@@ -4769,19 +4769,25 @@ module.exports = function () {
     }
   }
 
-  // TODO: Fill
   elementUtilities.getSBMLSimulationDefaults = function (className) {
     var pureClass = elementUtilities.getPureSbgnClass(className);
-    if (elementUtilities.processTypes.includes(pureClass)) {  // SBML Process
+    if(pureClass == 'compartment'){
+      return {
+        'spatialDimensions': 3,
+        'size': 1,
+        'units': "",
+        'constant': true
+      };
+    } else if (elementUtilities.processTypes.includes(pureClass)) {  // SBML Process
       return {
         'localParameters': [],
         'kineticLaw': ""
-      }
+      };
     } else if (elementUtilities.edgeTypes.includes(pureClass)) {  // SBML Edge
       return {
         'stoichiometry': 1,
-        'constant': false
-      }
+        'constant': true
+      };
     } else {    // SBML Node
       return {
         'initialAmount': 0.0,
