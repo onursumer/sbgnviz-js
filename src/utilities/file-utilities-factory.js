@@ -251,6 +251,13 @@ module.exports = function () {
    fileUtilities.loadFile( file, convert, callback1, callback2, fileUtilities.collapseMarkedNodes );
  };
 
+ fileUtilities.loadFileToLocal=function(file,callback1, callback2,urlParams,callback3){
+    var convert = function( text ) {
+      return nwtToJson.convert(textToXmlObject(text), urlParams);
+    };
+    fileUtilities.loadFile( file, convert, callback1, callback2, fileUtilities.collapseMarkedNodes,undefined,callback3);
+ };
+
  fileUtilities.loadNwtFile = function(file, callback1, callback2, urlParams) {
    var convert = function( text ) {
      return nwtToJson.convert(textToXmlObject(text), urlParams);
@@ -278,7 +285,8 @@ module.exports = function () {
    it is completely optional.
    signature: callback(textXml)
  */
- fileUtilities.loadFile = function(file, convertFcn, callback1, callback2, callback3, callback4) {
+
+ fileUtilities.loadFile = function(file, convertFcn, callback1, callback2, callback3, callback4,toLocalorGraph) {
    var self = this;
    uiUtilities.startSpinner("load-file-spinner");
 
@@ -331,8 +339,12 @@ module.exports = function () {
          if (typeof callback2 !== 'undefined') callback2();
          return;
        }
-
-       updateGraph(cyGraph);
+       if(toLocalorGraph!==undefined){
+        toLocalorGraph(cyGraph);
+       }
+       else{
+         updateGraph(cyGraph);
+       }
 
        if (typeof callback3 !== 'undefined') {
          callback3();
@@ -612,8 +624,6 @@ fileUtilities.hasLayoutSBML = function(file) {
  };
  
 fileUtilities.createJsonFromSBGN = function(){
-
-
     var sbgnmlText = jsonToSbgnml.createSbgnml();
     return sbgnmlToJson.convert(textToXmlObject(sbgnmlText));
 };

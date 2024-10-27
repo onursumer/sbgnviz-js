@@ -59,7 +59,6 @@ module.exports = function () {
     this.nodes = nodes || cy.nodes();
     this.edges = edges || cy.edges();
 
-    
     var id = [];
     var i = 0;
     this.nodes.forEach(node => ()=>{

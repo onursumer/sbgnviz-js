@@ -1200,6 +1200,7 @@ module.exports = function () {
     var glyphs = map.glyphs;
     var arcs = map.arcs;
 
+
     var i;
     for (i = 0; i < glyphs.length; i++) {
       var glyph = glyphs[i];
@@ -1359,7 +1360,6 @@ module.exports = function () {
       var arc = arcs[i];
       self.addCytoscapeJsEdge(arc, cytoscapeJsEdges, xmlObject);
     }
-
     if (map.extension && map.extension.has('renderInformation')) { // render extension was found
       self.applyStyle(map.extension.get('renderInformation'), cytoscapeJsNodes, cytoscapeJsEdges);
     }
