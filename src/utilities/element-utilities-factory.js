@@ -4763,7 +4763,7 @@ module.exports = function () {
         data[name] = getProp(defaultProps, name);
       }
     });
-
+    console.log(data)
     if(data.language && data.language == 'SBML') {
       data['simulation'] = elementUtilities.getSBMLSimulationDefaults(className);
     }
