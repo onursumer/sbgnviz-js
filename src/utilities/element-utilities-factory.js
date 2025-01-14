@@ -4780,10 +4780,11 @@ module.exports = function () {
       };
     } else if (elementUtilities.processTypes.includes(pureClass)) {  // SBML Process
       return {
-        'localParameters': [],
+        'localParameters': [],  // {name: , quantity: , unit: }
         'kineticLaw': ""
       };
     } else if (elementUtilities.edgeTypes.includes(pureClass)) {  // SBML Edge
+      console.log("debug");
       return {
         'stoichiometry': 1,
         'constant': true
