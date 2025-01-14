@@ -4763,14 +4763,13 @@ module.exports = function () {
         data[name] = getProp(defaultProps, name);
       }
     });
-    console.log(data)
     if(data.language && data.language == 'SBML') {
       data['simulation'] = elementUtilities.getSBMLSimulationDefaults(className);
     }
   }
 
+  // Edges aren't added using this. They are handled in chise.js. The default is: {stoichiometry: 1, constant: true}
   elementUtilities.getSBMLSimulationDefaults = function (className) {
-    console.log(className);
     var pureClass = elementUtilities.getPureSbgnClass(className);
     if(pureClass == 'compartment'){
       return {
@@ -4783,11 +4782,6 @@ module.exports = function () {
       return {
         'localParameters': [],  // {name: , quantity: , unit: }
         'kineticLaw': ""
-      };
-    } else if (elementUtilities.edgeTypes.includes(pureClass)) {  // SBML Edge
-      return {
-        'stoichiometry': 1,
-        'constant': true
       };
     } else {    // SBML Node
       return {
