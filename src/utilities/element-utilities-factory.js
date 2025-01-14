@@ -4770,6 +4770,7 @@ module.exports = function () {
   }
 
   elementUtilities.getSBMLSimulationDefaults = function (className) {
+    console.log(className);
     var pureClass = elementUtilities.getPureSbgnClass(className);
     if(pureClass == 'compartment'){
       return {
@@ -4784,7 +4785,6 @@ module.exports = function () {
         'kineticLaw': ""
       };
     } else if (elementUtilities.edgeTypes.includes(pureClass)) {  // SBML Edge
-      console.log("debug");
       return {
         'stoichiometry': 1,
         'constant': true
