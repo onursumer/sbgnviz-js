@@ -115,11 +115,15 @@ module.exports = function () {
             const comp = model.createCompartment()
             const compId = nodes[i]._private.data.id.replace(/-/g, "_");
             comp.setId(compId)
-            if(nodes[i].data("simulation")){
-                if(nodes[i].data("simulation")["size"])
-                    comp.setSize(nodes[i].data("simulation")["size"])
-                if(nodes[i].data("simulation")["constant"] !== null)
-                    comp.setConstant(nodes[i].data("simulation")["constant"])
+            // TODO: Implement Units
+            var simulationData = nodes[i].data("simulation");
+            if(simulationData){
+                if(simulationData["size"])
+                    comp.setSize(simulationData["size"]);
+                if(simulationData["constant"] !== null)
+                    comp.setConstant(simulationData["constant"]);
+                if(simulationData["spatialDimensions"] !== null)
+                    comp.setSpacialDimension(simulationData["spatialDimensions"]);
             }
             if(nodes[i]._private.data.label)
                 comp.setName(nodes[i]._private.data.label)
@@ -179,9 +183,19 @@ module.exports = function () {
                 newSpecies.setCompartment('default');
             }
 
-            newSpecies.setHasOnlySubstanceUnits(false);
-            newSpecies.setConstant(true);
-            newSpecies.setBoundaryCondition(true);
+            var simulationData = nodes[i].data("simulation");
+            if(simulationData){
+                if(simulationData["hasOnlySubstanceUnits"] !== null)
+                    newSpecies.setHasOnlySubstanceUnits(simulationData["hasOnlySubstanceUnits"]);
+                if(simulationData["initialAmount"] !== null && simulationData["hasOnlySubstanceUnits"])
+                    newSpecies.setInitialAmount(simulationData["initialAmount"]);
+                if(simulationData["initialConcentration"] !== null && !simulationData["hasOnlySubstanceUnits"])
+                    newSpecies.setInitialConcentration(simulationData["initialConcentration"]);
+                if(simulationData["boundaryCondition"] !== null)
+                    newSpecies.setBoundaryCondition(simulationData["boundaryCondition"]);
+                if(simulationData["constant"] !== null)
+                    newSpecies.setConstant(simulationData["constant"]);
+            }
 
             const new_id = nodes[i].id();
             var newStr = new_id.replace(/-/g, "_"); //Replacing - with _ because libsml doesn't allow - in id
