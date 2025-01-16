@@ -115,8 +115,12 @@ module.exports = function () {
             const comp = model.createCompartment()
             const compId = nodes[i]._private.data.id.replace(/-/g, "_");
             comp.setId(compId)
-            comp.setSize(1)
-            comp.setConstant(true)
+            if(nodes[i].data("simulation")){
+                if(nodes[i].data("simulation")["size"])
+                    comp.setSize(nodes[i].data("simulation")["size"])
+                if(nodes[i].data("simulation")["constant"] !== null)
+                    comp.setConstant(nodes[i].data("simulation")["constant"])
+            }
             if(nodes[i]._private.data.label)
                 comp.setName(nodes[i]._private.data.label)
 
