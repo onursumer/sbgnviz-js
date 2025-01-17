@@ -356,18 +356,19 @@ module.exports = function () {
                 rxn.setSBOTerm(185);
             else
                 rxn.setSBOTerm(176);
-
+            
+            console.log("WE ARE HERE");
             for(var lp in process.data("simulation")["localParameters"]){
                 var localp = rxn.createLocalParameter();
                 localp.setValue(lp.quantity);
                 localp.setName(lp.name.replace(/-/g, '_'));
             }
-
+            console.log("WE ARE HERE 2");
             const k1 = rxn.createKineticLaw();
             const parser = new libsbml.SBMLFormulaParser();
             const kmath = parser.parseL3Formula( (process.data("simulation")["kineticLaw"].replace(/-/g, '_') || "") );
             k1.setMath(kmath);
-
+            console.log("WE ARE HERE 3");
             // Add Layout Info for Processes
             const glyph = layout.createReactionGlyph();
             glyph.setId("process_" + (i+1));
