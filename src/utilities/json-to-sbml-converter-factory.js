@@ -304,6 +304,7 @@ module.exports = function () {
                 let sourceId = sourceEdge.source().id().replace(/-/g, '_');
                 const spr1 = rxn.createReactant();
                 spr1.setSpecies(sourceId);
+                spr1.setStoichiometry( (sourceEdge.data("simulation")["stoichiometry"] || "") );
                 spr1.setConstant(true);
             }
             
@@ -311,6 +312,7 @@ module.exports = function () {
                 let targetId = targetEdge.target().id().replace(/-/g, '_');
                 const spr2 = rxn.createProduct();
                 spr2.setSpecies(targetId);
+                spr2.setStoichiometry( (targetEdge.data("simulation")["stoichiometry"] || "") );
                 spr2.setConstant(true);
             }
             
@@ -354,6 +356,17 @@ module.exports = function () {
                 rxn.setSBOTerm(185);
             else
                 rxn.setSBOTerm(176);
+
+            for(var lp in process.data("simulation")["localParameters"]){
+                var localp = rxn.createLocalParameter();
+                localp.setValue(lp.quantity);
+                localp.setName(lp.name);
+            }
+
+            const k1 = rxn.createKineticLaw();
+            const parser = new libsbml.SBMLFormulaParser();
+            const kmath = parser.parseL3Formula( (process.data("simulation")["kineticLaw"] || "") );
+            k1.setMath(kmath);
 
             // Add Layout Info for Processes
             const glyph = layout.createReactionGlyph();
