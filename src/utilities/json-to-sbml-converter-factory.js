@@ -363,14 +363,9 @@ module.exports = function () {
                 localp.setName(lp.name.replace(/-/g, '_'));
             }
             const k1 = rxn.createKineticLaw();
-            console.log("HERE 1", k1);
             const parser = new libsbmlInstance.SBMLFormulaParser();
-            console.log("HERE 2", parser);
             const kmath = parser.parseL3Formula( (process.data("simulation")["kineticLaw"].replace(/-/g, '_') || "") );
-            console.log(process.data("simulation")["kineticLaw"].replace(/-/g, '_'));
-            console.log("HERE 3", kmath);
             k1.setMath(kmath);
-            console.log("WE ARE HERE 3");
             // Add Layout Info for Processes
             const glyph = layout.createReactionGlyph();
             glyph.setId("process_" + (i+1));
