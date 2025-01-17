@@ -367,6 +367,7 @@ module.exports = function () {
             const parser = new libsbmlInstance.SBMLFormulaParser();
             console.log("HERE 2", parser);
             const kmath = parser.parseL3Formula( (process.data("simulation")["kineticLaw"].replace(/-/g, '_') || "") );
+            console.log(process.data("simulation")["kineticLaw"].replace(/-/g, '_'));
             console.log("HERE 3", kmath);
             k1.setMath(kmath);
             console.log("WE ARE HERE 3");
