@@ -360,12 +360,12 @@ module.exports = function () {
             for(var lp in process.data("simulation")["localParameters"]){
                 var localp = rxn.createLocalParameter();
                 localp.setValue(lp.quantity);
-                localp.setName(lp.name);
+                localp.setName(lp.name.replace(/-/g, '_'));
             }
 
             const k1 = rxn.createKineticLaw();
             const parser = new libsbml.SBMLFormulaParser();
-            const kmath = parser.parseL3Formula( (process.data("simulation")["kineticLaw"] || "") );
+            const kmath = parser.parseL3Formula( (process.data("simulation")["kineticLaw"].replace(/-/g, '_') || "") );
             k1.setMath(kmath);
 
             // Add Layout Info for Processes
