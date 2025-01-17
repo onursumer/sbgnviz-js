@@ -357,16 +357,17 @@ module.exports = function () {
             else
                 rxn.setSBOTerm(176);
             
-            console.log("WE ARE HERE");
             for(var lp in process.data("simulation")["localParameters"]){
                 var localp = rxn.createLocalParameter();
                 localp.setValue(lp.quantity);
                 localp.setName(lp.name.replace(/-/g, '_'));
             }
-            console.log("WE ARE HERE 2");
             const k1 = rxn.createKineticLaw();
-            const parser = new libsbml.SBMLFormulaParser();
+            console.log("HERE 1", k1);
+            const parser = new libsbmlInstance.SBMLFormulaParser();
+            console.log("HERE 2", parser);
             const kmath = parser.parseL3Formula( (process.data("simulation")["kineticLaw"].replace(/-/g, '_') || "") );
+            console.log("HERE 3", kmath);
             k1.setMath(kmath);
             console.log("WE ARE HERE 3");
             // Add Layout Info for Processes
