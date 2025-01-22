@@ -141,7 +141,7 @@
     }
 
     // Expose createSbml
-    api[createSbml] = jsonToSbmlConverter.createSbml;
+    api["createSbml"] = jsonToSbmlConverter.createSbml;
 
     // Expose get cy function to enable accessing related cy instance
     api.getCy = sbgnCyInstance.getCy;
