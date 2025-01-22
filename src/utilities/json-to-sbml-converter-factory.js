@@ -123,7 +123,7 @@ module.exports = function () {
                 if(simulationData["constant"] !== null)
                     comp.setConstant(simulationData["constant"]);
                 if(simulationData["spatialDimensions"] !== null)
-                    comp.setSpacialDimension(simulationData["spatialDimensions"]);
+                    comp.setSpacialDimensions(simulationData["spatialDimensions"]);
             }
             if(nodes[i]._private.data.label)
                 comp.setName(nodes[i]._private.data.label)
