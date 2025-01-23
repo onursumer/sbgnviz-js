@@ -4768,7 +4768,6 @@ module.exports = function () {
     }
   }
 
-  // Edges aren't added using this. They are handled in chise.js. The default is: {stoichiometry: 1, constant: true}
   elementUtilities.getSBMLSimulationDefaults = function (className) {
     var pureClass = elementUtilities.getPureSbgnClass(className);
     if(pureClass == 'compartment'){
@@ -4784,6 +4783,11 @@ module.exports = function () {
         'kineticLaw': "",       // Use ID's of species
         'kineticLawVisible': "" // Can use labels of species
       };
+    } else if (elementUtilities.edgeTypes.includes(pureClass)) {  // SBML Edge
+      return {
+        'stoichiometry': 1,
+        'constant': false
+      }
     } else {    // SBML Node
       return {
         'initialAmount': 0.0,
