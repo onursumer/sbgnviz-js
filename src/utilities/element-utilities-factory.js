@@ -4786,7 +4786,7 @@ module.exports = function () {
     } else if (elementUtilities.edgeTypes.includes(pureClass)) {  // SBML Edge
       return {
         'stoichiometry': 1,
-        'constant': false
+        'constant': true
       }
     } else {    // SBML Node
       return {
