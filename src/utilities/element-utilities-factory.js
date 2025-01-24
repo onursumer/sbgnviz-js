@@ -4756,6 +4756,7 @@ module.exports = function () {
       return;
     }
     console.log("debug");
+    console.log(data);
     var defaultProps = elementUtilities.getDefaultProperties(className);
 
     Object.keys(defaultProps).forEach(function (name) {
