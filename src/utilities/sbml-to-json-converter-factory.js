@@ -205,6 +205,7 @@ sbmlToJson.addJSCompartments = function(compartmentMap, resultJson, cytoscapeJsN
       nodeObj.label = resultJson[i].data.label;
       nodeObj.statesandinfos = [];
       nodeObj.ports = [];
+      nodeObj.language = 'SBML';
       nodeObj.simulation = resultJson[i].simulation;
       if(resultJson[i].data.parent)
         nodeObj.parent = resultJson[i].data.parent;
@@ -322,6 +323,7 @@ sbmlToJson.addJSNodes = function(resultJson,cytoscapeJsNodes, speciesGlyphIdSpec
     nodeObj.statesandinfos = [];
     nodeObj.ports = [];
     nodeObj.parent = resultJson[i].data.parent;
+    nodeObj.language = 'SBML';
     nodeObj.simulation = resultJson[i].simulation;
 
     if(sboTerm == 253)
@@ -834,6 +836,7 @@ sbmlToJson.addJSEdges= function(resultJson, cytoscapeJsNodes, cytoscapeJsEdges,r
         {
           edgeObj.porttarget = edgeObj.target + ".2"
         }
+        edgeObj.language = 'SBML';
         edgeObj.simulation = resultJson[i].simulation;
 
         elementUtilities.extendEdgeDataWithClassDefaults( edgeObj, edgeObj.class );
@@ -880,6 +883,7 @@ sbmlToJson.addNodes = function( cytoscapeJsNodes, data) {
     
     nodeObj.ports = data.ports;
     nodeObj.parent = data.parent;
+    nodeObj.language = 'SBML';
     nodeObj.simulation = data.simulation;
 
     var cytoscapeJsNode = {data: nodeObj, style: styleObj};
