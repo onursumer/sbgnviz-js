@@ -245,10 +245,16 @@ sbmlToJson.addSpecies = function(model, cytoscapeJsNodes, compartmentBoundingBox
                       "bindingRegion": bindingRegion, "residueVariable": residueVariable, "unitOfInfo": unitOfInfo};
     // TODO: Substance Units!
     let simulationData = {};
-    if(species.isSetInitialAmount())
+    if(species.isSetInitialAmount()){
       simulationData.initialAmount = species.getInitialAmount();
-    if(species.isSetInitialConcentration())
+      if(!species.isSetInitialConcentration())
+        simulationData.initialConcentration = species.getInitialAmount();
+    }
+    if(species.isSetInitialConcentration()){
       simulationData.initialConcentration = species.getInitialConcentration();
+      if(!species.isSetInitialAmount())
+        simulationData.initialAmount = species.getInitialConcentration();
+    }
     if(species.isSetHasOnlySubstanceUnits())
       simulationData.hasOnlySubstanceUnits = species.getHasOnlySubstanceUnits();
     if(species.isSetConstant())
@@ -931,5 +937,3 @@ sbmlToJson.updateCompartmentBox = function(compartmentBoundingBoxes, compartment
 
 return sbmlToJson;
 };
-
-
