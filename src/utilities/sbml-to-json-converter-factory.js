@@ -155,8 +155,10 @@ sbmlToJson.addCompartments = function (model,cytoscapeJsNodes, compartmentBoundi
     let compartment = model.getCompartment(i);
     compartmentMap.set(compartment.getId(), i);
     if(compartment.getId() !== "default") {
-    let compartmentData = {"id": compartment.getId(), "label": compartment.getName(), "class": "compartment"};
-      resultJson.push({"data": compartmentData, "group": "nodes", "classes": "compartment"});
+      let compartmentData = {"id": compartment.getId(), "label": compartment.getName(), "class": "compartment"};
+      let simulationData = {"spatialDimensions": compartment.getSpatialDimensions() || 3, 
+        "size": compartment.getVolume() || 1, "constant": compartment.getConstant() || true}
+      resultJson.push({"data": compartmentData, "simulation": simulationData, "group": "nodes", "classes": "compartment"});
     }
     if(!compartmentBoundingBoxes.has(compartment.getId())){
       compartmentBoundingBoxes.set(compartment.getId(), {x1: 0, y1: 0, x2: 0, y2: 0});
@@ -198,6 +200,7 @@ sbmlToJson.addJSCompartments = function(compartmentMap, resultJson, cytoscapeJsN
       nodeObj.label = resultJson[i].data.label;
       nodeObj.statesandinfos = [];
       nodeObj.ports = [];
+      nodeObj.simulation = resultJson[i].simulation;
       if(resultJson[i].data.parent)
         nodeObj.parent = resultJson[i].data.parent;
       containerNodeMap.set(nodeObj.id, 

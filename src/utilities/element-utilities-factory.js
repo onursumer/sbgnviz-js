@@ -4764,7 +4764,16 @@ module.exports = function () {
       }
     });
     if(data.language && data.language == 'SBML') {
-      data['simulation'] = elementUtilities.getSBMLSimulationDefaults(className);
+      var defaultSimulationProps = elementUtilities.getSBMLSimulationDefaults(className);
+      if(!data['simulation']){
+        data['simulation'] = defaultSimulationProps;
+        return;
+      }
+
+      Object.keys(defaultSimulationProps).forEach(function (name) {
+        if( !Object.hasOwn(data['simulation'], name) )
+          data['simulation'][name] = defaultSimulationProps[name];
+      });
     }
   }
 

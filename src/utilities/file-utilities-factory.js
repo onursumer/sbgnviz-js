@@ -520,7 +520,6 @@ fileUtilities.hasLayoutSBML = function(file) {
   };
   let layoutFound = await fileUtilities.hasLayoutSBML(file);
   if (layoutFound){
-    console.log("Layout found in SBML file");
     fileUtilities.loadFile( file, convert, callback1, callback2, fileUtilities.collapseMarkedNodes, undefined);
   }
   else{
