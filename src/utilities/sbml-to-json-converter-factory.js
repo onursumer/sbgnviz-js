@@ -668,8 +668,10 @@ sbmlToJson.addReactions = function(model, cytoscapeJsEdges, cytoscapeJsNodes) {
 
     // TODO: Implement Local Parameters
     let simulationData = {};
-    if(reaction.isSetKineticLaw())
+    if(reaction.isSetKineticLaw()){
       simulationData.kineticLaw = reaction.getKineticLaw().getFormula();
+      console.log("law:", simulationData.kineticLaw);
+    }
     resultJson.push({"data": reactionData, "simulation": simulationData, "group": "nodes", "classes": "reaction"}); 
     
     // add modifier->reaction edges
