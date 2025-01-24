@@ -441,7 +441,6 @@ module.exports = function () {
 
  fileUtilities.saveAsSbml = function(filename, errorCallback){
   uiUtilities.startSpinner("load-spinner");
-  console.log("HERE");
   var sbgnml = this.convertSbgn();
   this.convertSbgnmlToSbml(sbgnml, function(data){
     if (!data.result) {

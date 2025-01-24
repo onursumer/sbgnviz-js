@@ -364,7 +364,6 @@ module.exports = function () {
             }
             const k1 = rxn.createKineticLaw();
             const parser = new libsbmlInstance.SBMLFormulaParser();
-            console.log("export", process.data("simulation")["kineticLaw"]);
             const kmath = parser.parseL3Formula( (process.data("simulation")["kineticLaw"].replace(/-/g, '_') || "") );
             k1.setMath(kmath);
             // Add Layout Info for Processes
@@ -485,7 +484,6 @@ module.exports = function () {
             var edgeId = reducedProcessArray.edge.id().replace(/-/g, '_');
             var sourceId = reducedProcessArray.source.id().replace(/-/g, '_');
             var targetId = reducedProcessArray.target.id().replace(/-/g, '_');
-            console.log(reducedProcessArray.target);
             const rxn = model.createReaction()
             rxn.setId('reduced_'+ edgeId);
             rxn.setSBOTerm(reducedNotationEdge[reducedProcessArray.edge.data('class')])
