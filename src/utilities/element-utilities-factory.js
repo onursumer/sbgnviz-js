@@ -4797,7 +4797,7 @@ module.exports = function () {
         'stoichiometry': 1,
         'constant': true
       }
-    } else {    // SBML Node
+    } else {    // SBML Species
       return {
         'initialAmount': 0.0,
         'initialConcentration': 0.0,

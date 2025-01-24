@@ -156,8 +156,13 @@ sbmlToJson.addCompartments = function (model,cytoscapeJsNodes, compartmentBoundi
     compartmentMap.set(compartment.getId(), i);
     if(compartment.getId() !== "default") {
       let compartmentData = {"id": compartment.getId(), "label": compartment.getName(), "class": "compartment"};
-      let simulationData = {"spatialDimensions": compartment.getSpatialDimensions() || 3, 
-        "size": compartment.getVolume() || 1, "constant": compartment.getConstant() || true}
+      let simulationData = {};
+      if(compartment.isSetSpatialDimensions())
+        simulationData.spatialDimensions = compartment.getSpatialDimensions();
+      if(compartment.isSetVolume())
+        simulationData.size = compartment.compartment.getVolume();
+      if(compartment.isSetConstant())
+        simulationData.constant = compartment.getConstant();
       resultJson.push({"data": compartmentData, "simulation": simulationData, "group": "nodes", "classes": "compartment"});
     }
     if(!compartmentBoundingBoxes.has(compartment.getId())){
@@ -238,7 +243,21 @@ sbmlToJson.addSpecies = function(model, cytoscapeJsNodes, compartmentBoundingBox
                       "parent": species.getCompartment(), "sboTerm": species.getSBOTerm(),
                       "active": active, "multimer": multimer, "hypothetical": hypothetical,
                       "bindingRegion": bindingRegion, "residueVariable": residueVariable, "unitOfInfo": unitOfInfo};
-    resultJson.push({"data": speciesData, "group": "nodes", "classes": "species"});
+    // TODO: Substance Units!
+    let simulationData = {};
+    if(species.isSetInitialAmount())
+      simulationData.initialAmount = species.getInitialAmount();
+    if(species.isSetInitialConcentration())
+      simulationData.initialConcentration = species.getInitialConcentration();
+    if(species.isSetHasOnlySubstanceUnits())
+      simulationData.hasOnlySubstanceUnits = species.getHasOnlySubstanceUnits();
+    if(species.isSetConstant())
+      simulationData.constant = species.getConstant();
+    if(species.isSetBoundaryCondition())
+      simulationData.boundaryCondition = species.getBoundaryCondition();
+    if(species.isSetConversionFactor())
+      simulationData.conversionFactor = species.getConversionFactor();
+    resultJson.push({"data": speciesData, "simulation": simulationData, "group": "nodes", "classes": "species"});
   }
   let speciesGlyphIdSpeciesIdMap = new Map();
   if (layout) {
@@ -297,6 +316,7 @@ sbmlToJson.addJSNodes = function(resultJson,cytoscapeJsNodes, speciesGlyphIdSpec
     nodeObj.statesandinfos = [];
     nodeObj.ports = [];
     nodeObj.parent = resultJson[i].data.parent;
+    nodeObj.simulation = resultJson[i].simulation;
 
     if(sboTerm == 253)
       containerNodeMap.set(nodeObj.id, 
@@ -585,13 +605,17 @@ sbmlToJson.addReactions = function(model, cytoscapeJsEdges, cytoscapeJsNodes) {
 
     }
   
-    // add reactant->reaction edges
     for(let j = 0; j < reaction.getNumReactants(); j++){
       let reactant = reaction.getReactant(j);
       let reactantEdgeData = {"id": reactant.getSpecies() + '_' + reaction.getId(), "source": reactant.getSpecies(), "target": reaction.getId()};
       if (edgeClass1) 
         reactantEdgeData.class = edgeClass1;
-      resultJson.push({"data": reactantEdgeData, "group": "edges", "classes": "reactantEdge"});
+      let simulationDataReactant = {};
+      if(reactant.isSetStoichiometry())
+        simulationDataReactant.stoichiometry = reactant.getStoichiometry();
+      if(reactant.isSetConstant())
+        simulationDataReactant.constant = reactant.getConstant();
+      resultJson.push({"data": reactantEdgeData, "simulation": simulationDataReactant, "group": "edges", "classes": "reactantEdge"});
 
       // collect possible parent info
       let speciesCompartment = speciesCompartmentMap.get(reactant.getSpecies());
@@ -609,7 +633,12 @@ sbmlToJson.addReactions = function(model, cytoscapeJsEdges, cytoscapeJsNodes) {
         productEdgeData.class = edgeClass2;
       if(sboTermReaction == 231)
         productEdgeData.class = "trigger";
-      resultJson.push({"data": productEdgeData, "group": "edges", "classes": "productEdge"});
+      let simulationDataProduct = {};
+      if(product.isSetStoichiometry())
+        simulationDataProduct.stoichiometry = product.getStoichiometry();
+      if(product.isSetConstant())
+        simulationDataProduct.constant = product.getConstant();
+      resultJson.push({"data": productEdgeData, "simulation": simulationDataProduct, "group": "edges", "classes": "productEdge"});
 
       // collect possible parent info
       let speciesCompartment = speciesCompartmentMap.get(product.getSpecies());
@@ -628,7 +657,12 @@ sbmlToJson.addReactions = function(model, cytoscapeJsEdges, cytoscapeJsNodes) {
     if(nodeClass){
       reactionData.class = nodeClass
     }
-    resultJson.push({"data": reactionData, "group": "nodes", "classes": "reaction"}); 
+
+    // TODO: Implement Local Parameters
+    let simulationData = {};
+    if(reaction.isSetKineticLaw())
+      simulationData.kineticLaw = reaction.getFormula();
+    resultJson.push({"data": reactionData, "simulation": simulationData, "group": "nodes", "classes": "reaction"}); 
     
     // add modifier->reaction edges
     for(let l = 0; l < reaction.getNumModifiers(); l++){
@@ -794,7 +828,7 @@ sbmlToJson.addJSEdges= function(resultJson, cytoscapeJsNodes, cytoscapeJsEdges,r
         {
           edgeObj.porttarget = edgeObj.target + ".2"
         }
-
+        edgeObj.simulation = resultJson[i].simulation;
 
         elementUtilities.extendEdgeDataWithClassDefaults( edgeObj, edgeObj.class );
         var cytoscapeJsEdge1 = {data: edgeObj, style: styleObj};
