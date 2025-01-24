@@ -160,7 +160,7 @@ sbmlToJson.addCompartments = function (model,cytoscapeJsNodes, compartmentBoundi
       if(compartment.isSetSpatialDimensions())
         simulationData.spatialDimensions = compartment.getSpatialDimensions();
       if(compartment.isSetVolume())
-        simulationData.size = compartment.compartment.getVolume();
+        simulationData.size = compartment.getVolume();
       if(compartment.isSetConstant())
         simulationData.constant = compartment.getConstant();
       resultJson.push({"data": compartmentData, "simulation": simulationData, "group": "nodes", "classes": "compartment"});
