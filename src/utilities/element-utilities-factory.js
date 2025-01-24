@@ -4769,7 +4769,7 @@ module.exports = function () {
         data['simulation'] = defaultSimulationProps;
         return;
       }
-
+      console.log(defaultSimulationProps);
       Object.keys(defaultSimulationProps).forEach(function (name) {
         if( !Object.hasOwn(data['simulation'], name) )
           data['simulation'][name] = defaultSimulationProps[name];

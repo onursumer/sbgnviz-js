@@ -29,6 +29,7 @@
     "libsbmljs_stable": "^5.18.0-beta1",
     "mime-types": "^2.1.35",
     "pretty-data": "^0.40.0",
+    "sbgnviz": "github:umut-er/sbgnviz.js#SBML_Simulation",
     "xml2js": "^0.4.17"
   },
   "devDependencies": {
