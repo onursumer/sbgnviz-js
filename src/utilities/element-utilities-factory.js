@@ -4755,8 +4755,6 @@ module.exports = function () {
     if (!className) {
       return;
     }
-    console.log("debug");
-    console.log(data);
     var defaultProps = elementUtilities.getDefaultProperties(className);
 
     Object.keys(defaultProps).forEach(function (name) {
@@ -4770,7 +4768,6 @@ module.exports = function () {
         data['simulation'] = defaultSimulationProps;
         return;
       }
-      console.log(defaultSimulationProps);
       Object.keys(defaultSimulationProps).forEach(function (name) {
         if( !Object.hasOwn(data['simulation'], name) )
           data['simulation'][name] = defaultSimulationProps[name];
