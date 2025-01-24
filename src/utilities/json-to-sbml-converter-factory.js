@@ -364,6 +364,7 @@ module.exports = function () {
             }
             const k1 = rxn.createKineticLaw();
             const parser = new libsbmlInstance.SBMLFormulaParser();
+            console.log("export", process.data("simulation")["kineticLaw"]);
             const kmath = parser.parseL3Formula( (process.data("simulation")["kineticLaw"].replace(/-/g, '_') || "") );
             k1.setMath(kmath);
             // Add Layout Info for Processes
