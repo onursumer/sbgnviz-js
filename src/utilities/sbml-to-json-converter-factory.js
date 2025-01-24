@@ -257,6 +257,7 @@ sbmlToJson.addSpecies = function(model, cytoscapeJsNodes, compartmentBoundingBox
       simulationData.boundaryCondition = species.getBoundaryCondition();
     if(species.isSetConversionFactor())
       simulationData.conversionFactor = species.getConversionFactor();
+    console.log(simulationData);
     resultJson.push({"data": speciesData, "simulation": simulationData, "group": "nodes", "classes": "species"});
   }
   let speciesGlyphIdSpeciesIdMap = new Map();
