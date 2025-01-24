@@ -671,6 +671,7 @@ sbmlToJson.addReactions = function(model, cytoscapeJsEdges, cytoscapeJsNodes) {
     if(reaction.isSetKineticLaw()){
       simulationData.kineticLaw = reaction.getKineticLaw().getFormula();
       console.log("law:", simulationData.kineticLaw);
+      console.log(simulationData);
     }
     resultJson.push({"data": reactionData, "simulation": simulationData, "group": "nodes", "classes": "reaction"}); 
     
@@ -890,7 +891,6 @@ sbmlToJson.addNodes = function( cytoscapeJsNodes, data) {
 
     var cytoscapeJsNode = {data: nodeObj, style: styleObj};
     elementUtilities.extendNodeDataWithClassDefaults( nodeObj, nodeObj.class );
-    console.log("add nodes", cytoscapeJsNode);
     cytoscapeJsNodes.push(cytoscapeJsNode)
     return nodeObj.id;
 }
