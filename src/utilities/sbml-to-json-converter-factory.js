@@ -880,8 +880,9 @@ sbmlToJson.addNodes = function( cytoscapeJsNodes, data) {
     
     nodeObj.ports = data.ports;
     nodeObj.parent = data.parent;
+    nodeObj.simulation = data.simulation;
 
-    var cytoscapeJsNode = {data: nodeObj, simulation: data.simulation, style: styleObj};
+    var cytoscapeJsNode = {data: nodeObj, style: styleObj};
     elementUtilities.extendNodeDataWithClassDefaults( nodeObj, nodeObj.class );
     cytoscapeJsNodes.push(cytoscapeJsNode)
     return nodeObj.id;
