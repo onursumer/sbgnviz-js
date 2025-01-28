@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SBGNViz.js Demo</title>
+    <!-- Include Cytoscape.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.19.0/cytoscape.min.js"></script>
+    <!-- Include SBGNViz.js from the local project -->
+    <script src="dist/sbgnviz.min.js"></script>
+    <!-- Include SBGNViz CSS from the local project -->
+    <link href="dist/sbgnviz.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Container for the SBGN network -->
+    <div id="sbgn-network-container" style="width: 100%; height: 600px; border: 1px solid #ccc;"></div>
+
+    <script>
+        // Initialize SBGNViz
+        var sbgn = sbgnviz({
+            container: document.getElementById('sbgn-network-container'),
+            ready: function () {
+                // Load and visualize an SBGN-ML file
+                fetch('examples/data/example.sbgn') // Replace with the path to your SBGN-ML file
+                    .then(response => response.text())
+                    .then(data => {
+                        sbgn.loadSbgn(data);
+                    })
+                    .catch(error => {
+                        console.error('Error loading SBGN-ML file:', error);
+                    });
+            }
+        });
+    </script>
+</body>
+</html>
