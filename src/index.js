@@ -145,7 +145,7 @@
 
     // Expose each sbgn graph utility seperately
     for (var prop in sbmlSimulationUtilities) {
-      api[prop] = graphUtilities[prop];
+      api[prop] = sbmlSimulationUtilities[prop];
     }
 
     // Expose createSbml
