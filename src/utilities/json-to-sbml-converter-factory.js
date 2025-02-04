@@ -358,7 +358,7 @@ module.exports = function () {
                 rxn.setSBOTerm(176);
             
             for(var lp in process.data("simulation")["localParameters"]){
-                var localp = rxn.createLocalParameter();
+                var localp = rxn.getKineticLaw().createLocalParameter();
                 localp.setValue(lp.quantity);
                 localp.setName(lp.name.replace(/-/g, '_'));
             }
