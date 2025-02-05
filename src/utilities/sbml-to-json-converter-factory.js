@@ -6,7 +6,7 @@ var jQuery = ($ = libs.jQuery);
 var classes = require("./classes");
 
 module.exports = function () {
-  var elementUtilities, graphUtilities, handledElements, mainUtilities, libsbmlInstance;
+  var elementUtilities, graphUtilities, handledElements, mainUtilities, sbmlSimulationUtilities, libsbmlInstance;
   let resultJson = [];
   let speciesCompartmentMap = new Map;
   let layout;
@@ -17,6 +17,7 @@ module.exports = function () {
     elementUtilities = param.elementUtilities;
     graphUtilities = param.graphUtilities;
     mainUtilities = param.mainUtilities;
+    sbmlSimulationUtilities = param.sbmlSimulationUtilities;
     libsbmlInstance = param.libsbmlInstance;
 
     handledElements = {};
@@ -128,6 +129,7 @@ module.exports = function () {
     let compartmentBoundingBoxes = new Map;
     let containerNodeMap = new Map;
 
+    sbmlToJson.addParameters(model);
     sbmlToJson.addCompartments(model, cytoscapeJsNodes, compartmentBoundingBoxes, containerNodeMap);
     sbmlToJson.addSpecies(model, cytoscapeJsNodes, compartmentBoundingBoxes, containerNodeMap);
     sbmlToJson.addReactions(model, cytoscapeJsEdges,cytoscapeJsNodes);
@@ -147,6 +149,23 @@ module.exports = function () {
     return cytoscapeJsGraph;
   };
 
+// add parameters
+sbmlToJson.addParameters = function(model) {
+  for(let i = 0; i < model.getNumParameters(); i++){
+    let parameter = model.getParameter(i);
+    var paramId = parameter.getId();
+    var paramName = paramId;
+    if (parameter.isSetName())
+      paramName = parameter.getName();
+    paramValue = 0.0;
+    if (parameter.isSetValue())
+      paramValue = parameter.getValue();
+    paramConstant = true;
+    if (parameter.isSetConstant())
+      paramConstant = parameter.getConstant();
+    sbmlSimulationUtilities.addParameter(paramId, paramName, paramValue, paramConstant);
+  }
+}
 
 // add compartment nodes
 sbmlToJson.addCompartments = function (model,cytoscapeJsNodes, compartmentBoundingBoxes, containerNodeMap) {
