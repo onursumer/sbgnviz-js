@@ -10,7 +10,7 @@ var textUtilities = require('./text-utilities');
 var classes = require('./classes');
 
 module.exports = function () {
-    var elementUtilities, graphUtilities, experimentalDataOverlay;
+    var elementUtilities, graphUtilities, experimentalDataOverlay, sbmlSimulationUtilities;
     var cy;
 
     var nodesToSbo = 
@@ -74,6 +74,7 @@ module.exports = function () {
         elementUtilities = param.elementUtilities;
         graphUtilities = param.graphUtilities;
         experimentalDataOverlay = param.experimentalDataOverlay;
+        sbmlSimulationUtilities = param.sbmlSimulationUtilities;
         cy = param.sbgnCyInstance.getCy();
       }
 
@@ -104,6 +105,16 @@ module.exports = function () {
         const dim = layout.getDimensions();
         const box = cy.elements().boundingBox();
         dim.setWidth(box.w); dim.setHeight(box.h);
+
+        // Create Parameters
+        var parameters = sbmlSimulationUtilities.getParameters();
+        for (var p of parameters) {
+            const param = model.createParameter();
+            param.setId(p.id);
+            param.setName(p.name);
+            param.setValue(p.value);
+            param.setConstant(p.constant);
+        }
 
         // Create compartment
         for (let i = 0; i < nodes.length; i++)
