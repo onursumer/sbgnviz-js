@@ -15,7 +15,7 @@ module.exports = function () {
     ) {
       d += performance.now(); //use high-precision timer if available
     }
-    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+    return "xxxxxxxx_xxxx_4xxx_yxxx_xxxxxxxxxxxx".replace(
       /[xy]/g,
       function (c) {
         var r = (d + Math.random() * 16) % 16 | 0;
@@ -26,7 +26,7 @@ module.exports = function () {
   };
 
   sbmlSimulationUtilities.generateParameterID = function() {
-    return "param-" + sbmlSimulationUtilities.generateUUID();
+    return "param_" + sbmlSimulationUtilities.generateUUID();
   }
 
   sbmlSimulationUtilities.addParameter = function (name, value, unit, constant) {
