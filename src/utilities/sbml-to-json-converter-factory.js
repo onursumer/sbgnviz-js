@@ -163,6 +163,7 @@ sbmlToJson.addParameters = function(model) {
     paramConstant = true;
     if (parameter.isSetConstant())
       paramConstant = parameter.getConstant();
+    console.log(parameter.isSetValue(), paramValue, parameter.getValue());
     sbmlSimulationUtilities.addParameter(paramId, paramName, paramValue, paramConstant);
   }
 }
