@@ -39,6 +39,17 @@ module.exports = function () {
     }
   }
 
+  // Should only be used while importing, not really anything else
+  // Consider using sbmlSimulationUtilities.addParameter(name, value, unit, constant)
+  sbmlSimulationUtilities.addParameterWithId = function(id, name, value, unit, constant){
+    parameters[id] = {
+      name: name,
+      value: value,
+      unit: unit,
+      constant: constant
+    }
+  }
+
   sbmlSimulationUtilities.removeParameter = function (id) {
     delete parameters[id];
   }

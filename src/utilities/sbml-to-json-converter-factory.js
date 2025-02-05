@@ -149,7 +149,7 @@ module.exports = function () {
     return cytoscapeJsGraph;
   };
 
-// add parameters
+// add parameters TODO: implement units
 sbmlToJson.addParameters = function(model) {
   for(let i = 0; i < model.getNumParameters(); i++){
     let parameter = model.getParameter(i);
@@ -163,8 +163,7 @@ sbmlToJson.addParameters = function(model) {
     paramConstant = true;
     if (parameter.isSetConstant())
       paramConstant = parameter.getConstant();
-    console.log(parameter.isSetValue(), paramValue, parameter.getValue());
-    sbmlSimulationUtilities.addParameter(paramId, paramName, paramValue, paramConstant);
+    sbmlSimulationUtilities.addParameterWithId(paramId, paramName, paramValue, "", paramConstant);
   }
 }
 
