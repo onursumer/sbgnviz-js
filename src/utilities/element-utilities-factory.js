@@ -4787,8 +4787,7 @@ module.exports = function () {
     } else if (elementUtilities.processTypes.includes(pureClass)) {  // SBML Process
       return {
         'localParameters': [],  // {name: , value: , unit: }
-        'kineticLaw': "0",       // Use ID's of species
-        'kineticLawVisible': "0" // Can use labels of species
+        'kineticLaw': "0"
       };
     } else if (elementUtilities.edgeTypes.includes(pureClass)) {  // SBML Edge
       return {
