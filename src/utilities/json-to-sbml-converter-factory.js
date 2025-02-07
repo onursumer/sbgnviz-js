@@ -368,12 +368,12 @@ module.exports = function () {
             else
                 rxn.setSBOTerm(176);
             
+            const k1 = rxn.createKineticLaw();
             for(var lp in process.data("simulation")["localParameters"]){
-                var localp = rxn.getKineticLaw().createLocalParameter();
+                var localp = k1.createLocalParameter();
                 localp.setValue(lp.quantity);
                 localp.setName(lp.name.replace(/-/g, '_'));
             }
-            const k1 = rxn.createKineticLaw();
             const parser = new libsbmlInstance.SBMLFormulaParser();
             const kmath = parser.parseL3Formula( (process.data("simulation")["kineticLaw"] || "") );
             k1.setMath(kmath);
