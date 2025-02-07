@@ -47,7 +47,7 @@ module.exports = function () {
     ) {
       d += performance.now(); //use high-precision timer if available
     }
-    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+    return "xxxxxxxx_xxxx_4xxx_yxxx_xxxxxxxxxxxx".replace(
       /[xy]/g,
       function (c) {
         var r = (d + Math.random() * 16) % 16 | 0;
@@ -4785,8 +4785,7 @@ module.exports = function () {
     } else if (elementUtilities.processTypes.includes(pureClass)) {  // SBML Process
       return {
         'localParameters': [],  // {name: , value: , unit: }
-        'kineticLaw': "",       // Use ID's of species
-        'kineticLawVisible': "" // Can use labels of species
+        'kineticLaw': "0"
       };
     } else if (elementUtilities.edgeTypes.includes(pureClass)) {  // SBML Edge
       return {
