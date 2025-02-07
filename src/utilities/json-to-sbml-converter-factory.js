@@ -371,6 +371,7 @@ module.exports = function () {
             const k1 = rxn.createKineticLaw();
             for(var lp in process.data("simulation")["localParameters"]){
                 var localp = k1.createLocalParameter();
+                console.log("HELLO, ", localp);
                 localp.setValue(lp.quantity);
                 localp.setName(lp.name.replace(/-/g, '_'));
             }
